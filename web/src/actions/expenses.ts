@@ -123,7 +123,7 @@ export async function getTripExpenses(tripId: string): Promise<ExpenseItem[]> {
                 amount: e.amount,
                 currency: e.currency,
                 category: e.category,
-                date: e.date,
+                date: e.expense_date || new Date().toISOString(), // Fixed: column is expense_date
                 type: "custom",
             });
         });
