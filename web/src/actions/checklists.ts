@@ -56,25 +56,16 @@ export async function addChecklistItem(
 
     const nextOrder = (maxOrderData?.sort_index || 0) + 100;
 
-    // Check if owner_id column exists (for RLS)
-    const { error: colError } = await supabase.from("checklist_items").select("owner_id").limit(1);
-    const hasOwnerId = !colError;
-
-    const insertData: Record<string, unknown> = {
-        trip_id: tripId,
-        description,
-        group_name: groupName || "General",
-        sort_index: nextOrder,
-        is_checked: false,
-    };
-
-    if (hasOwnerId) {
-        insertData.owner_id = user.id;
-    }
-
+    // RLS policy uses trip ownership - user must own the trip to insert
     const { data, error } = await supabase
         .from("checklist_items")
-        .insert(insertData)
+        .insert({
+            trip_id: tripId,
+            description,
+            group_name: groupName || "General",
+            sort_index: nextOrder,
+            is_checked: false,
+        })
         .select()
         .single();
 
