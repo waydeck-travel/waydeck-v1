@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, Plus, UserPlus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Loader2, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +19,7 @@ import { Label } from "@/components/ui/label";
 import { createTraveller } from "@/actions/travellers";
 
 export function AddTravellerDialog() {
+    const router = useRouter();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -34,7 +36,7 @@ export function AddTravellerDialog() {
 
         setLoading(true);
         try {
-            await createTraveller({
+            const result = await createTraveller({
                 first_name: firstName,
                 last_name: lastName,
                 email: email || null,
@@ -47,19 +49,24 @@ export function AddTravellerDialog() {
                 avatar_url: null,
                 notes: null,
             });
-            toast.success("Traveller added");
-            setOpen(false);
 
-            // Reset
-            setFirstName("");
-            setLastName("");
-            setEmail("");
-            setPhone("");
-            setPassportNumber("");
-            setNationality("");
+            if (result.success) {
+                toast.success("Traveller added");
+                setOpen(false);
+                // Reset
+                setFirstName("");
+                setLastName("");
+                setEmail("");
+                setPhone("");
+                setPassportNumber("");
+                setNationality("");
+                router.refresh();
+            } else {
+                toast.error(result.error);
+            }
         } catch (error) {
             console.error(error);
-            toast.error("Failed to add traveller");
+            toast.error("Failed to add traveller - unexpected error");
         } finally {
             setLoading(false);
         }

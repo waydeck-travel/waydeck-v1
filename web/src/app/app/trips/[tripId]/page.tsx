@@ -19,6 +19,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Timeline } from "@/components/trips/timeline";
+import { ShareTripDialog } from "@/components/trips/share-trip-dialog";
 import { getTripWithDetails, getTripItems } from "@/actions/trip-items";
 import { formatDateRange, getDurationDays, isTripActive } from "@/lib/dates";
 import {
@@ -99,13 +100,16 @@ export default async function TripPage({ params, searchParams }: TripPageProps) 
                         </span>
                     </div>
                 </div>
-                <Button variant="outline" size="sm" asChild>
-                    <Link href={`/ app / trips / ${tripId}/edit`}>
-                        <Edit className="h-4 w-4 mr-1" />
-                        Edit
-                    </Link >
-                </Button >
-            </div >
+                <div className="flex gap-2">
+                    <ShareTripDialog tripId={tripId} tripName={trip.name} />
+                    <Button variant="outline" size="sm" asChild>
+                        <Link href={`/app/trips/${tripId}/edit`}>
+                            <Edit className="h-4 w-4 mr-1" />
+                            Edit
+                        </Link>
+                    </Button>
+                </div>
+            </div>
 
             {/* Stats Row */}
             < Card >

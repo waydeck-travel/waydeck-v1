@@ -28,16 +28,22 @@ export async function getTravellers(): Promise<Traveller[]> {
 
 export type CreateTravellerInput = Omit<
     Traveller,
-    "id" | "user_id" | "created_at" | "updated_at"
+    "id" | "owner_id" | "created_at" | "updated_at"
 >;
 
-export async function createTraveller(input: CreateTravellerInput): Promise<Traveller | null> {
+export type TravellerResult =
+    | { success: true; data: Traveller }
+    | { success: false; error: string };
+
+export async function createTraveller(input: CreateTravellerInput): Promise<TravellerResult> {
     const supabase = await createClient();
     const {
         data: { user },
     } = await supabase.auth.getUser();
 
-    if (!user) return null;
+    if (!user) {
+        return { success: false, error: "Not authenticated" };
+    }
 
     const { data, error } = await supabase
         .from("travellers")
@@ -50,11 +56,11 @@ export async function createTraveller(input: CreateTravellerInput): Promise<Trav
 
     if (error) {
         console.error("Error creating traveller:", error);
-        return null;
+        return { success: false, error: `${error.message} (code: ${error.code})` };
     }
 
     revalidatePath("/app/travellers");
-    return data;
+    return { success: true, data };
 }
 
 export async function updateTraveller(
