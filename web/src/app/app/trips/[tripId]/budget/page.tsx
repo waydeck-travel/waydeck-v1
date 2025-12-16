@@ -44,7 +44,8 @@ export default async function TripBudgetPage({ params }: BudgetPageProps) {
     // Prepare categories with budget data
     // Note: 'spent' is currently placeholder 0 until expenses aggregation is implemented
     const categories = Object.keys(CATEGORY_ICONS).map((name) => {
-        const budgetItem = budgets.find((b) => b.category === name);
+        // DB stores lowercase categories, compare case-insensitively
+        const budgetItem = budgets.find((b) => b.category.toLowerCase() === name.toLowerCase());
         const budgetAmount = budgetItem?.budget_amount || 0;
 
         return {

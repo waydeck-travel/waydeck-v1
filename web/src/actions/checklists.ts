@@ -170,3 +170,110 @@ export async function createChecklistTemplate(
     revalidatePath("/app/checklists");
     return data;
 }
+
+// Get single template by ID
+export async function getChecklistTemplate(templateId: string): Promise<ChecklistTemplate | null> {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) return null;
+
+    const { data, error } = await supabase
+        .from("checklist_templates")
+        .select("*")
+        .eq("id", templateId)
+        .eq("owner_id", user.id)
+        .single();
+
+    if (error) {
+        console.error("Error fetching checklist template:", error);
+        return null;
+    }
+
+    return data;
+}
+
+// Template item interface
+export interface TemplateItem {
+    id: string;
+    template_id: string;
+    description: string;
+    sort_index: number;
+    created_at: string;
+}
+
+// Get items for a template
+export async function getTemplateItems(templateId: string): Promise<TemplateItem[]> {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+        .from("checklist_template_items")
+        .select("*")
+        .eq("template_id", templateId)
+        .order("sort_index", { ascending: true });
+
+    if (error) {
+        console.error("Error fetching template items:", error);
+        return [];
+    }
+
+    return data || [];
+}
+
+// Add item to template
+export async function addTemplateItem(
+    templateId: string,
+    description: string
+): Promise<TemplateItem | null> {
+    const supabase = await createClient();
+
+    // Get max sort order
+    const { data: maxOrderData } = await supabase
+        .from("checklist_template_items")
+        .select("sort_index")
+        .eq("template_id", templateId)
+        .order("sort_index", { ascending: false })
+        .limit(1)
+        .single();
+
+    const nextOrder = (maxOrderData?.sort_index || 0) + 100;
+
+    const { data, error } = await supabase
+        .from("checklist_template_items")
+        .insert({
+            template_id: templateId,
+            description,
+            sort_index: nextOrder,
+        })
+        .select()
+        .single();
+
+    if (error) {
+        console.error("Error adding template item:", error);
+        return null;
+    }
+
+    revalidatePath(`/app/checklists/${templateId}`);
+    return data;
+}
+
+// Delete item from template
+export async function deleteTemplateItem(
+    itemId: string,
+    templateId: string
+): Promise<boolean> {
+    const supabase = await createClient();
+
+    const { error } = await supabase
+        .from("checklist_template_items")
+        .delete()
+        .eq("id", itemId);
+
+    if (error) {
+        console.error("Error deleting template item:", error);
+        return false;
+    }
+
+    revalidatePath(`/app/checklists/${templateId}`);
+    return true;
+}

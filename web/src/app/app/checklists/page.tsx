@@ -48,24 +48,26 @@ export default async function ChecklistsPage() {
             ) : (
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {templates.map((template) => (
-                        <Card key={template.id} className="hover:bg-muted/50 transition-colors">
-                            <CardHeader>
-                                <CardTitle className="flex items-center gap-2">
-                                    <FileText className="h-4 w-4 text-primary" />
-                                    {template.name}
-                                </CardTitle>
-                                <CardDescription>
-                                    Updated {formatDistanceToNow(new Date(template.updated_at), { addSuffix: true })}
-                                </CardDescription>
-                            </CardHeader>
-                            {template.description && (
-                                <CardContent>
-                                    <p className="text-sm text-muted-foreground line-clamp-3">
-                                        {template.description}
-                                    </p>
-                                </CardContent>
-                            )}
-                        </Card>
+                        <Link key={template.id} href={`/app/checklists/${template.id}`}>
+                            <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <FileText className="h-4 w-4 text-primary" />
+                                        {template.name}
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Updated {formatDistanceToNow(new Date(template.updated_at), { addSuffix: true })}
+                                    </CardDescription>
+                                </CardHeader>
+                                {template.description && (
+                                    <CardContent>
+                                        <p className="text-sm text-muted-foreground line-clamp-3">
+                                            {template.description}
+                                        </p>
+                                    </CardContent>
+                                )}
+                            </Card>
+                        </Link>
                     ))}
                 </div>
             )}
