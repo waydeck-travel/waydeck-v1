@@ -1,0 +1,73 @@
+name: waydeck
+description: "Waydeck - Travel Management App"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # UI Components
+  tdesign_flutter: ^0.1.8
+  cupertino_icons: ^1.0.8
+
+  # Supabase
+  supabase_flutter: ^2.8.3
+
+  # State Management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Navigation
+  go_router: ^14.6.2
+
+  # Data Models
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+  # Date/Time
+  intl: ^0.20.1
+
+  # Environment
+  flutter_dotenv: ^5.2.1
+
+  # File Handling
+  file_picker: ^8.1.7
+  path_provider: ^2.1.5
+  path: ^1.9.1
+
+  # Image/PDF
+  cached_network_image: ^3.4.1
+  flutter_cache_manager: ^3.4.1
+
+  # Utilities
+  uuid: ^4.5.1
+  collection: ^1.19.0
+  shared_preferences: ^2.3.4
+  http: ^1.2.2
+  url_launcher: ^6.3.1
+  share_plus: ^10.1.4
+  flutter_local_notifications: ^19.5.0
+  timezone: ^0.10.1
+  sentry_flutter: ^9.8.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  
+  # Code Generation
+  build_runner: ^2.4.14
+  freezed: ^2.5.7
+  json_serializable: ^6.9.2
+  riverpod_generator: ^2.6.3
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - .env
+    - assets/images/
