@@ -36,18 +36,17 @@ export function AddChecklistItemDialog({ tripId }: AddChecklistItemDialogProps) 
         setLoading(true);
         try {
             const result = await addChecklistItem(tripId, description, group);
-            if (result) {
+            if (result.success) {
                 toast.success("Item added");
                 setOpen(false);
                 setDescription("");
                 router.refresh(); // Force page to refetch data
             } else {
-                toast.error("Failed to add item - no result returned");
+                toast.error(result.error);
             }
         } catch (error) {
             console.error(error);
-            const message = error instanceof Error ? error.message : "Failed to add item";
-            toast.error(message);
+            toast.error("Failed to add item - unexpected error");
         } finally {
             setLoading(false);
         }

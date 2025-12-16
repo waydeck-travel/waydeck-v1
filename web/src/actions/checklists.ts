@@ -32,17 +32,21 @@ export async function getTripChecklist(tripId: string): Promise<ChecklistItem[]>
     return data || [];
 }
 
+// Return type for addChecklistItem with structured result
+export type AddChecklistResult =
+    | { success: true; data: ChecklistItem }
+    | { success: false; error: string };
+
 export async function addChecklistItem(
     tripId: string,
     description: string,
     groupName?: string
-): Promise<ChecklistItem | null> {
+): Promise<AddChecklistResult> {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-        console.error("No authenticated user for adding checklist item");
-        throw new Error("Not authenticated");
+        return { success: false, error: "Not authenticated" };
     }
 
     // Get max sort order
@@ -56,7 +60,7 @@ export async function addChecklistItem(
 
     const nextOrder = (maxOrderData?.sort_index || 0) + 100;
 
-    // Insert item - RLS disabled or using trip ownership
+    // Insert item
     const { data, error } = await supabase
         .from("checklist_items")
         .insert({
@@ -70,17 +74,15 @@ export async function addChecklistItem(
         .single();
 
     if (error) {
-        console.error("Error adding checklist item:", {
-            message: error.message,
-            code: error.code,
-            details: error.details,
-            hint: error.hint,
-        });
-        throw new Error(`Failed to add item: ${error.message}`);
+        console.error("Error adding checklist item:", error);
+        return {
+            success: false,
+            error: `${error.message} (code: ${error.code})`
+        };
     }
 
     revalidatePath(`/app/trips/${tripId}/checklist`);
-    return data;
+    return { success: true, data };
 }
 
 export async function toggleChecklistItem(
