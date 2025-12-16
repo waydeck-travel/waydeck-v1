@@ -38,6 +38,12 @@ export async function addChecklistItem(
     groupName?: string
 ): Promise<ChecklistItem | null> {
     const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        console.error("No authenticated user for adding checklist item");
+        return null;
+    }
 
     // Get max sort order
     const { data: maxOrderData } = await supabase
@@ -50,15 +56,25 @@ export async function addChecklistItem(
 
     const nextOrder = (maxOrderData?.sort_index || 0) + 100;
 
+    // Check if owner_id column exists (for RLS)
+    const { error: colError } = await supabase.from("checklist_items").select("owner_id").limit(1);
+    const hasOwnerId = !colError;
+
+    const insertData: Record<string, unknown> = {
+        trip_id: tripId,
+        description,
+        group_name: groupName || "General",
+        sort_index: nextOrder,
+        is_checked: false,
+    };
+
+    if (hasOwnerId) {
+        insertData.owner_id = user.id;
+    }
+
     const { data, error } = await supabase
         .from("checklist_items")
-        .insert({
-            trip_id: tripId,
-            description,
-            group_name: groupName || "General",
-            sort_index: nextOrder,
-            is_checked: false,
-        })
+        .insert(insertData)
         .select()
         .single();
 
