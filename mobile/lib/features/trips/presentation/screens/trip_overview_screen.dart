@@ -8,7 +8,6 @@ import '../../../../app/theme.dart';
 import '../../../../shared/models/models.dart';
 import '../../../../shared/ui/ui.dart';
 import '../../../../shared/services/trip_share_service.dart';
-import '../../../trip_items/presentation/providers/trip_items_provider.dart';
 import '../../../trip_items/presentation/providers/timeline_provider.dart';
 import '../../../documents/presentation/providers/documents_provider.dart';
 import '../providers/trips_provider.dart';
@@ -23,7 +22,6 @@ class TripOverviewScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tripAsync = ref.watch(tripProvider(tripId));
-    final itemsAsync = ref.watch(tripItemsProvider(tripId));
 
     return Scaffold(
       backgroundColor: WaydeckTheme.background,

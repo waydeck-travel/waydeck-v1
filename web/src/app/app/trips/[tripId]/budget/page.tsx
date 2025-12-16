@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { getTrip } from "@/actions/trips";
 import { getTripBudgets } from "@/actions/budgets";
+import { getExpensesByCategory } from "@/actions/expenses";
 import { SetBudgetDialog } from "@/components/trips/set-budget-dialog";
 
 interface BudgetPageProps {
@@ -30,9 +31,10 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export default async function TripBudgetPage({ params }: BudgetPageProps) {
     const { tripId } = await params;
-    const [trip, budgets] = await Promise.all([
+    const [trip, budgets, expensesByCategory] = await Promise.all([
         getTrip(tripId),
         getTripBudgets(tripId),
+        getExpensesByCategory(tripId),
     ]);
 
     if (!trip) {
@@ -41,18 +43,19 @@ export default async function TripBudgetPage({ params }: BudgetPageProps) {
 
     const currency = trip.currency || "USD";
 
-    // Prepare categories with budget data
-    // Note: 'spent' is currently placeholder 0 until expenses aggregation is implemented
+    // Prepare categories with budget data and actual expenses
     const categories = Object.keys(CATEGORY_ICONS).map((name) => {
         // DB stores lowercase categories, compare case-insensitively
         const budgetItem = budgets.find((b) => b.category.toLowerCase() === name.toLowerCase());
         const budgetAmount = budgetItem?.budget_amount || 0;
+        // Get actual spent from aggregated expenses
+        const spentAmount = expensesByCategory[name.toLowerCase()] || 0;
 
         return {
             name,
             icon: CATEGORY_ICONS[name],
             budget: budgetAmount,
-            spent: 0, // Placeholder
+            spent: spentAmount,
             color: CATEGORY_COLORS[name],
         };
     });

@@ -370,8 +370,8 @@ class _GlobalDocumentsScreenState extends ConsumerState<GlobalDocumentsScreen> {
                             final file = result.files.first;
                             if (file.bytes == null) {
                                setSheetState(() => isUploading = false);
-                               if (mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                               if (ctx.mounted) {
+                                  ScaffoldMessenger.of(ctx).showSnackBar(
                                     const SnackBar(content: Text('Failed to read file data')),
                                   );
                                }
@@ -385,23 +385,14 @@ class _GlobalDocumentsScreenState extends ConsumerState<GlobalDocumentsScreen> {
                               mimeType: 'application/octet-stream', // Or infer from extension
                             );
                             
-                            if (!mounted) return;
+                            if (!ctx.mounted) return;
                             Navigator.pop(ctx);
-                            if (success != null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text('Uploaded ${file.name}'),
-                                    backgroundColor: WaydeckTheme.success,
-                                  ),
-                                );
-                            } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Upload failed'),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                            }
+                            ScaffoldMessenger.of(ctx).showSnackBar(
+                              SnackBar(
+                                content: Text(success != null ? 'Uploaded ${file.name}' : 'Upload failed'),
+                                backgroundColor: success != null ? WaydeckTheme.success : Colors.red,
+                              ),
+                            );
                           }
                         },
                   icon: isUploading 

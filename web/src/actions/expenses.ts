@@ -159,3 +159,37 @@ export async function addCustomExpense(
     revalidatePath(`/app/trips/${tripId}/expenses`);
     return true;
 }
+
+// Aggregate expenses by category for budget comparison
+export type CategoryExpenses = Record<string, number>;
+
+export async function getExpensesByCategory(tripId: string): Promise<CategoryExpenses> {
+    const expenses = await getTripExpenses(tripId);
+
+    const categoryTotals: CategoryExpenses = {
+        transport: 0,
+        accommodation: 0,
+        activities: 0,
+        food: 0,
+        other: 0,
+    };
+
+    expenses.forEach((expense) => {
+        const category = expense.category.toLowerCase();
+
+        // Map expense types/categories to budget categories
+        if (category === "transport" || expense.type === "transport") {
+            categoryTotals.transport += expense.amount;
+        } else if (category === "accommodation" || expense.type === "stay") {
+            categoryTotals.accommodation += expense.amount;
+        } else if (category === "activities" || expense.type === "activity") {
+            categoryTotals.activities += expense.amount;
+        } else if (category === "food") {
+            categoryTotals.food += expense.amount;
+        } else {
+            categoryTotals.other += expense.amount;
+        }
+    });
+
+    return categoryTotals;
+}

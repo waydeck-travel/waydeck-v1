@@ -97,7 +97,6 @@ class _TransportFormScreenState extends ConsumerState<TransportFormScreen> {
     _expenseNotesController.dispose();
     super.dispose();
   }
-  String? _timeError;
 
   Future<void> _handleSave() async {
     if (!_formKey.currentState!.validate()) return;
@@ -108,9 +107,6 @@ class _TransportFormScreenState extends ConsumerState<TransportFormScreen> {
     // Validate that arrival is after departure
     if (departureLocal != null && arrivalLocal != null) {
       if (arrivalLocal.isBefore(departureLocal)) {
-        setState(() {
-          _timeError = 'Arrival time must be after departure time';
-        });
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text('Arrival time must be after departure time'),
@@ -120,9 +116,6 @@ class _TransportFormScreenState extends ConsumerState<TransportFormScreen> {
         return;
       }
     }
-    
-    // Clear any time error
-    setState(() => _timeError = null);
 
     // Generate title based on mode
     String title;
