@@ -72,14 +72,12 @@ export async function getTripExpenses(tripId: string): Promise<ExpenseItem[]> {
             let currency = "USD";
 
             if (item.type === "transport" && item.transport_items) {
-                // @ts-ignore
                 const details = Array.isArray(item.transport_items) ? item.transport_items[0] : item.transport_items;
                 if (details) {
                     amount = details.expense_amount || details.price || 0;
                     currency = details.expense_currency || details.currency || "USD";
                 }
             } else if (item.type === "stay" && item.stay_items) {
-                // @ts-ignore
                 const details = Array.isArray(item.stay_items) ? item.stay_items[0] : item.stay_items;
                 if (details) {
                     amount = details.expense_amount || details.price || 0;
@@ -87,7 +85,6 @@ export async function getTripExpenses(tripId: string): Promise<ExpenseItem[]> {
                 }
             }
             else if (item.type === "activity" && item.activity_items) {
-                // @ts-ignore
                 const details = Array.isArray(item.activity_items) ? item.activity_items[0] : item.activity_items;
                 if (details) {
                     amount = details.expense_amount || details.price || 0;
@@ -103,7 +100,7 @@ export async function getTripExpenses(tripId: string): Promise<ExpenseItem[]> {
                     currency,
                     category: item.type === "stay" ? "Accommodation" : (item.type.charAt(0).toUpperCase() + item.type.slice(1)),
                     date: item.start_time_utc || new Date().toISOString(),
-                    type: item.type as any,
+                    type: item.type as ExpenseItem["type"],
                 });
             }
         });

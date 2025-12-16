@@ -124,7 +124,7 @@ export async function createTransportItem(input: CreateTransportInput): Promise<
     // Get user id
     const { data: { user } } = await supabase.auth.getUser();
 
-    const payload: any = {
+    const payload: Record<string, unknown> = {
         trip_item_id: tripItem.id,
         mode: input.mode,
         carrier_name: input.carrier_name || null,
@@ -196,7 +196,7 @@ export async function createStayItem(input: CreateStayInput): Promise<{ id: stri
     const hasOwnerId = !colError;
     const { data: { user } } = await supabase.auth.getUser();
 
-    const payload: any = {
+    const payload: Record<string, unknown> = {
         trip_item_id: tripItem.id,
         accommodation_name: input.accommodation_name,
         address: input.address || null,
@@ -257,7 +257,7 @@ export async function createActivityItem(input: CreateActivityInput): Promise<{ 
     const hasOwnerId = !colError;
     const { data: { user } } = await supabase.auth.getUser();
 
-    const payload: any = {
+    const payload: Record<string, unknown> = {
         trip_item_id: tripItem.id,
         category: input.category || null,
         location_name: input.location_name || null,

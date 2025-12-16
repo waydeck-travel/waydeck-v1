@@ -1,9 +1,8 @@
 "use client";
 
-import { format, parseISO, isSameDay } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { TimelineItemCard } from "./timeline-item-card";
 import type { TripItemWithDetails } from "@/actions/trip-items";
-import { useState } from "react";
 
 interface TimelineItem extends TripItemWithDetails {
     dateKey: string;
@@ -41,8 +40,7 @@ interface TimelineProps {
     tripStartDate?: string | null;
 }
 
-export function Timeline({ items: initialItems, tripId, tripStartDate: startTime }: TimelineProps) {
-    const [items, setItems] = useState(initialItems);
+export function Timeline({ items, tripId, tripStartDate: startTime }: TimelineProps) {
     // Group items by date
     const tripStart = startTime ? parseISO(startTime) : null;
 
@@ -100,7 +98,7 @@ export function Timeline({ items: initialItems, tripId, tripStartDate: startTime
                             {/* Timeline rail */}
                             <div className="absolute left-[26px] top-0 bottom-0 w-0.5 bg-border" />
 
-                            {dayItems.map((item, idx) => (
+                            {dayItems.map((item) => (
                                 <div key={item.id} className="relative">
                                     {/* Timeline dot */}
                                     <div

@@ -17,15 +17,12 @@ import {
     Hotel,
     Ticket,
     FileText,
-    MapPin,
     Clock,
-    Calendar,
     Trash2,
-    Edit,
     Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -99,14 +96,12 @@ export default function ItemDetailPage({ params }: ItemDetailPageProps) {
         notFound();
     }
 
-    const getItemIcon = () => {
+    // Determine icon type without creating component during render
+    const getIconType = (): string => {
         if (item.type === "transport") {
-            const mode = item.transport_items?.[0]?.mode || "other";
-            return transportModeIcons[mode] || CarTaxiFront;
+            return item.transport_items?.[0]?.mode || "other";
         }
-        if (item.type === "stay") return Hotel;
-        if (item.type === "activity") return Ticket;
-        return FileText;
+        return item.type;
     };
 
     const getItemColor = () => {
@@ -116,7 +111,8 @@ export default function ItemDetailPage({ params }: ItemDetailPageProps) {
         return "text-amber-600";
     };
 
-    const Icon = getItemIcon();
+    const iconType = getIconType();
+    const iconClass = `h-6 w-6 ${getItemColor()}`;
 
     return (
         <div className="space-y-6">
@@ -129,7 +125,19 @@ export default function ItemDetailPage({ params }: ItemDetailPageProps) {
                 </Button>
                 <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3">
-                        <Icon className={`h-6 w-6 ${getItemColor()}`} />
+                        {/* Render icon based on type without creating component during render */}
+                        {iconType === "flight" && <Plane className={iconClass} />}
+                        {iconType === "train" && <Train className={iconClass} />}
+                        {iconType === "bus" && <Bus className={iconClass} />}
+                        {iconType === "car" && <Car className={iconClass} />}
+                        {iconType === "bike" && <Bike className={iconClass} />}
+                        {iconType === "cruise" && <Ship className={iconClass} />}
+                        {iconType === "metro" && <TrainFront className={iconClass} />}
+                        {iconType === "ferry" && <Sailboat className={iconClass} />}
+                        {iconType === "other" && <CarTaxiFront className={iconClass} />}
+                        {iconType === "stay" && <Hotel className={iconClass} />}
+                        {iconType === "activity" && <Ticket className={iconClass} />}
+                        {iconType === "note" && <FileText className={iconClass} />}
                         <h1 className="text-2xl font-bold truncate">{item.title}</h1>
                     </div>
                     <Badge variant="outline" className="mt-1 capitalize">{item.type}</Badge>

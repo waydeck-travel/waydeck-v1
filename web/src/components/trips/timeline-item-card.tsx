@@ -15,7 +15,6 @@ import {
     FileText,
     MapPin,
     Clock,
-    Coffee,
     ChevronRight,
 } from "lucide-react";
 import Link from "next/link";

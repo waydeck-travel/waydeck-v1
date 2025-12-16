@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Calculator, Plus, Plane, Hotel, Ticket, ShoppingBag, Utensils } from "lucide-react";
+import { ArrowLeft, Calculator, Plane, Hotel, Ticket, ShoppingBag, Utensils, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { getTrip } from "@/actions/trips";
 import { getTripBudgets } from "@/actions/budgets";
@@ -12,7 +12,7 @@ interface BudgetPageProps {
     params: Promise<{ tripId: string }>;
 }
 
-const CATEGORY_ICONS: Record<string, any> = {
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
     Transport: Plane,
     Accommodation: Hotel,
     Activities: Ticket,
@@ -45,7 +45,7 @@ export default async function TripBudgetPage({ params }: BudgetPageProps) {
     // Note: 'spent' is currently placeholder 0 until expenses aggregation is implemented
     const categories = Object.keys(CATEGORY_ICONS).map((name) => {
         const budgetItem = budgets.find((b) => b.category === name);
-        const budgetAmount = budgetItem?.amount || 0;
+        const budgetAmount = budgetItem?.budget_amount || 0;
 
         return {
             name,

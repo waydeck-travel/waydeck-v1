@@ -10,7 +10,6 @@ import {
     CheckSquare,
     Wallet,
     Calculator,
-    Settings,
     Calendar,
     MapPin,
     Edit,
@@ -101,15 +100,15 @@ export default async function TripPage({ params, searchParams }: TripPageProps) 
                     </div>
                 </div>
                 <Button variant="outline" size="sm" asChild>
-                    <Link href={`/app/trips/${tripId}/edit`}>
+                    <Link href={`/ app / trips / ${tripId}/edit`}>
                         <Edit className="h-4 w-4 mr-1" />
                         Edit
-                    </Link>
-                </Button>
-            </div>
+                    </Link >
+                </Button >
+            </div >
 
             {/* Stats Row */}
-            <Card>
+            < Card >
                 <CardContent className="py-3 px-4">
                     <div className="flex flex-wrap gap-4 sm:gap-6">
                         <div className="flex items-center gap-2 text-sm">
@@ -134,30 +133,32 @@ export default async function TripPage({ params, searchParams }: TripPageProps) 
                         </div>
                     </div>
                 </CardContent>
-            </Card>
+            </Card >
 
             {/* Cities Chips */}
-            {trip.cities && trip.cities.length > 0 && (
-                <div className="flex flex-wrap gap-2 items-center">
-                    {filterCity && (
-                        <Badge variant="secondary" className="py-1 px-3">
-                            Filtered: {filterCity}
-                            <Link href={`/app/trips/${tripId}`} className="ml-2 hover:text-destructive">×</Link>
-                        </Badge>
-                    )}
-                    {trip.cities.map((city: string) => (
-                        <Link key={city} href={`/app/trips/${tripId}?city=${encodeURIComponent(city)}`}>
-                            <Badge
-                                variant={filterCity === city ? "default" : "outline"}
-                                className="py-1 px-3 cursor-pointer hover:bg-muted"
-                            >
-                                <MapPin className="h-3 w-3 mr-1" />
-                                {city}
+            {
+                trip.cities && trip.cities.length > 0 && (
+                    <div className="flex flex-wrap gap-2 items-center">
+                        {filterCity && (
+                            <Badge variant="secondary" className="py-1 px-3">
+                                Filtered: {filterCity}
+                                <Link href={`/app/trips/${tripId}`} className="ml-2 hover:text-destructive">×</Link>
                             </Badge>
-                        </Link>
-                    ))}
-                </div>
-            )}
+                        )}
+                        {trip.cities.map((city: string) => (
+                            <Link key={city} href={`/app/trips/${tripId}?city=${encodeURIComponent(city)}`}>
+                                <Badge
+                                    variant={filterCity === city ? "default" : "outline"}
+                                    className="py-1 px-3 cursor-pointer hover:bg-muted"
+                                >
+                                    <MapPin className="h-3 w-3 mr-1" />
+                                    {city}
+                                </Badge>
+                            </Link>
+                        ))}
+                    </div>
+                )
+            }
 
             {/* Quick Actions */}
             <div className="flex flex-wrap gap-2">
@@ -230,6 +231,6 @@ export default async function TripPage({ params, searchParams }: TripPageProps) 
             </div>
 
             <Timeline items={items} tripId={tripId} tripStartDate={trip.start_date} />
-        </div>
+        </div >
     );
 }

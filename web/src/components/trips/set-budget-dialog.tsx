@@ -45,14 +45,14 @@ export function SetBudgetDialog({ tripId, currency, currentBudgets }: SetBudgetD
         if (open) {
             // Reset or populate based on selection
             const existing = currentBudgets.find(b => b.category === category);
-            setAmount(existing ? existing.amount.toString() : "");
+            setAmount(existing ? existing.budget_amount.toString() : "");
         }
     };
 
     const handleCategoryChange = (val: string) => {
         setCategory(val);
         const existing = currentBudgets.find(b => b.category === val);
-        setAmount(existing ? existing.amount.toString() : "");
+        setAmount(existing ? existing.budget_amount.toString() : "");
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
