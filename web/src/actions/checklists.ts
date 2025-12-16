@@ -42,7 +42,7 @@ export async function addChecklistItem(
 
     if (!user) {
         console.error("No authenticated user for adding checklist item");
-        return null;
+        throw new Error("Not authenticated");
     }
 
     // Get max sort order
@@ -56,7 +56,7 @@ export async function addChecklistItem(
 
     const nextOrder = (maxOrderData?.sort_index || 0) + 100;
 
-    // RLS policy uses trip ownership - user must own the trip to insert
+    // Insert item - RLS disabled or using trip ownership
     const { data, error } = await supabase
         .from("checklist_items")
         .insert({
@@ -70,8 +70,13 @@ export async function addChecklistItem(
         .single();
 
     if (error) {
-        console.error("Error adding checklist item:", error);
-        return null;
+        console.error("Error adding checklist item:", {
+            message: error.message,
+            code: error.code,
+            details: error.details,
+            hint: error.hint,
+        });
+        throw new Error(`Failed to add item: ${error.message}`);
     }
 
     revalidatePath(`/app/trips/${tripId}/checklist`);

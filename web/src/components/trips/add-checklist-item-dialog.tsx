@@ -42,11 +42,12 @@ export function AddChecklistItemDialog({ tripId }: AddChecklistItemDialogProps) 
                 setDescription("");
                 router.refresh(); // Force page to refetch data
             } else {
-                toast.error("Failed to add item");
+                toast.error("Failed to add item - no result returned");
             }
         } catch (error) {
             console.error(error);
-            toast.error("Failed to add item");
+            const message = error instanceof Error ? error.message : "Failed to add item";
+            toast.error(message);
         } finally {
             setLoading(false);
         }
