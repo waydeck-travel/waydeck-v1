@@ -1,6 +1,5 @@
 import { FileText, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { DocumentGrid } from "@/components/documents/document-grid";
 import { getGlobalDocuments } from "@/actions/documents";
 import { UploadDocumentDialog } from "@/components/documents/upload-document-dialog";

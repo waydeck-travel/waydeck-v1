@@ -76,8 +76,7 @@ export async function getGlobalDocuments(): Promise<GlobalDocument[]> {
 
     if (!user) return [];
 
-    // CHECK SCHEMA
-    const { error: colError } = await supabase.from("global_documents").select("user_id").limit(1);
+
 
     const { data, error } = await supabase
         .from("global_documents")

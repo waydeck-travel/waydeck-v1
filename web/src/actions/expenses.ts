@@ -18,27 +18,8 @@ export async function getTripExpenses(tripId: string): Promise<ExpenseItem[]> {
 
     const expenses: ExpenseItem[] = [];
 
-    // 1. Fetch Transport Expenses
-    const { data: transportItems } = await supabase
-        .from("transport_items")
-        .select(`
-            trip_item_id,
-            price,
-            currency,
-            trip_items (
-                title,
-                start_time_utc
-            )
-        `)
-        // We need to join via trip_items to filter by trip_id, but supabase query syntax is tricky for deep filtering
-        // So we might fetch filtered by trip_id if we can, or filtering in join.
-        // Easier: fetch trip_items first then join? No, performant way:
-        .eq("trip_items.trip_id", tripId) // This requires inner join filter which Supabase supports if set up
-    // Actually, simpler to select from trip_items where type=transport and include transport_items
-    // Let's try selecting from trip_items joined with subtypes
-
     // Alternative: standard way
-    const { data: items, error } = await supabase
+    const { data: items } = await supabase
         .from("trip_items")
         .select(`
             id,

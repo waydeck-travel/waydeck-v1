@@ -35,7 +35,6 @@ export async function updateSession(request: NextRequest) {
 
     const {
         data: { user },
-        error,
     } = await supabase.auth.getUser();
 
     const isAppRoute = request.nextUrl.pathname.startsWith("/app");

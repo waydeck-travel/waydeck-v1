@@ -40,17 +40,7 @@ import { getItemById, deleteTripItem, TripItemWithDetails } from "@/actions/trip
 import { formatTime, formatShortDate } from "@/lib/dates";
 import { toast } from "sonner";
 
-const transportModeIcons: Record<string, typeof Plane> = {
-    flight: Plane,
-    train: Train,
-    bus: Bus,
-    car: Car,
-    bike: Bike,
-    cruise: Ship,
-    metro: TrainFront,
-    ferry: Sailboat,
-    other: CarTaxiFront,
-};
+
 
 interface ItemDetailPageProps {
     params: Promise<{ tripId: string; itemId: string }>;

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, FileText, Plus, Upload } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DocumentGrid } from "@/components/documents/document-grid";
 import { UploadDocumentDialog } from "@/components/documents/upload-document-dialog";

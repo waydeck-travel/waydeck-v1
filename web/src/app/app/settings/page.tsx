@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-    Settings,
     User,
     Users,
     FileText,
@@ -39,7 +37,7 @@ interface SettingItem {
 }
 
 export default function SettingsPage() {
-    const router = useRouter();
+    // router removed
     const [isSigningOut, setIsSigningOut] = useState(false);
     const [user, setUser] = useState<{ email: string; name?: string } | null>(null);
     const [darkMode, setDarkMode] = useState(false);
@@ -47,6 +45,7 @@ export default function SettingsPage() {
     useEffect(() => {
         async function fetchUser() {
             const supabase = createClient();
+
             const { data: { user: authUser } } = await supabase.auth.getUser();
             if (authUser) {
                 setUser({

@@ -1,7 +1,4 @@
-import { Calendar, Plane, Hotel, Ticket, MapPin } from "lucide-react";
-import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Calendar, Plane } from "lucide-react";
 
 // Placeholder for now - will be connected to Supabase later
 export default function TodayPage() {

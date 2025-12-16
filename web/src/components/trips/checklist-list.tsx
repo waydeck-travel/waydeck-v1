@@ -24,7 +24,7 @@ export function ChecklistList({ items, tripId }: ChecklistListProps) {
 
         try {
             await toggleChecklistItem(id, tripId, checked);
-        } catch (error) {
+        } catch {
             // Revert on error
             toast.error("Failed to update item");
             setOptItems(items);
@@ -40,7 +40,7 @@ export function ChecklistList({ items, tripId }: ChecklistListProps) {
         try {
             await deleteChecklistItem(id, tripId);
             toast.success("Item deleted");
-        } catch (error) {
+        } catch {
             toast.error("Failed to delete item");
             setOptItems(items);
         }

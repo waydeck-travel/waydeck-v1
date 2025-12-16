@@ -145,17 +145,7 @@ function cacheResults(cacheKey: string, data: PlacePrediction[]): void {
     }
 }
 
-/**
- * Convert Google Places types to our PlaceType
- */
-function getPlaceTypeFromGoogleTypes(types: string[]): PlaceType {
-    if (types.includes("airport")) return "airport";
-    if (types.includes("lodging")) return "hotel";
-    if (types.includes("locality") || types.includes("administrative_area_level_1")) return "city";
-    if (types.includes("street_address") || types.includes("route") || types.includes("premise"))
-        return "address";
-    return "establishment";
-}
+
 
 /**
  * Build the types parameter for Google Places API based on PlaceType

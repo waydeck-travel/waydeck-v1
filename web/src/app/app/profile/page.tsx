@@ -9,7 +9,6 @@ import {
     Loader2,
     Mail,
     Phone,
-    Calendar,
     MapPin,
     Edit,
     Save,

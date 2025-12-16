@@ -1,0 +1,76 @@
+
+> web@0.1.0 lint
+> eslint
+
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/actions/budgets.ts
+  72:19  warning  'transport' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/actions/documents.ts
+  80:20  warning  'colError' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/actions/expenses.ts
+  22:19  warning  'transportItems' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  41:26  warning  'error' is assigned a value but never used           @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/app/app/documents/page.tsx
+  3:10  warning  'Separator' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/app/app/profile/page.tsx
+  12:5  warning  'Calendar' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/app/app/settings/page.tsx
+   7:5   warning  'Settings' is defined but never used         @typescript-eslint/no-unused-vars
+  42:11  warning  'router' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/app/app/today/page.tsx
+  1:27  warning  'Hotel' is defined but never used        @typescript-eslint/no-unused-vars
+  1:34  warning  'Ticket' is defined but never used       @typescript-eslint/no-unused-vars
+  1:42  warning  'MapPin' is defined but never used       @typescript-eslint/no-unused-vars
+  2:8   warning  'Link' is defined but never used         @typescript-eslint/no-unused-vars
+  3:10  warning  'Card' is defined but never used         @typescript-eslint/no-unused-vars
+  3:16  warning  'CardContent' is defined but never used  @typescript-eslint/no-unused-vars
+  3:29  warning  'CardHeader' is defined but never used   @typescript-eslint/no-unused-vars
+  3:41  warning  'CardTitle' is defined but never used    @typescript-eslint/no-unused-vars
+  4:10  warning  'Badge' is defined but never used        @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/app/app/trips/[tripId]/checklist/page.tsx
+  3:34  warning  'Plus' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/app/app/trips/[tripId]/documents/page.tsx
+  3:21  warning  'FileText' is defined but never used  @typescript-eslint/no-unused-vars
+  3:31  warning  'Plus' is defined but never used      @typescript-eslint/no-unused-vars
+  3:37  warning  'Upload' is defined but never used    @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/app/app/trips/[tripId]/expenses/page.tsx
+  3:21  warning  'Plus' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/app/app/trips/[tripId]/items/[itemId]/page.tsx
+  43:7  warning  'transportModeIcons' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/components/documents/document-grid.tsx
+  128:54  warning  Image elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/components/documents/upload-document-dialog.tsx
+  5:53  warning  'FileText' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/components/forms/airline-autocomplete.tsx
+  4:33  warning  'Plane' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/components/forms/transport-form.tsx
+   29:5   warning  'FormDescription' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  100:26  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+/Users/dheeraj/Work/App Ideas/waydeck-v1/web/src/components/forms/transport-form.tsx:100:26
+   98 |     });
+   99 |
+> 100 |     const selectedMode = form.watch("mode");
+      |                          ^^^^ React Hook Form's `useForm()` API returns a `watch()` function which cannot be memoized safely.
+  101 |
+  102 |     async function onSubmit(data: TransportFormValues) {
+  103 |         setIsSubmitting(true);  react-hooks/incompatible-library
+
+✖ 28 problems (0 errors, 28 warnings)
+

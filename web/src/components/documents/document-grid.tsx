@@ -3,7 +3,7 @@
 import {
     FileText,
     File,
-    Image,
+    Image as ImageIcon,
     MoreVertical,
     Download,
     Trash2,
@@ -125,7 +125,7 @@ function DocumentCard({ document, type, tripId }: DocumentCardProps) {
                 <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                         <div className="rounded-lg bg-muted p-2">
-                            {iconType === "image" && <Image className="h-5 w-5 text-muted-foreground" />}
+                            {iconType === "image" && <ImageIcon className="h-5 w-5 text-muted-foreground" />}
                             {iconType === "pdf" && <FileText className="h-5 w-5 text-muted-foreground" />}
                             {iconType === "file" && <File className="h-5 w-5 text-muted-foreground" />}
                         </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { Loader2, Upload, Calendar as CalendarIcon, FileText } from "lucide-react";
+import { Loader2, Upload, Calendar as CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";

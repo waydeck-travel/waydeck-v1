@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, CheckSquare, Plus, Import } from "lucide-react";
+import { ArrowLeft, CheckSquare, Import } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { getTrip } from "@/actions/trips";

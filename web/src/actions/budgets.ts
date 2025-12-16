@@ -62,17 +62,14 @@ export async function setTripBudget(
     return data;
 }
 
-export async function getTripExpensesSummary(tripId: string) {
-    const supabase = await createClient();
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getTripExpensesSummary(_tripId: string) {
+    // const supabase = await createClient();
 
     // Fetch expenses from all item types and custom expenses
     // This is a simplified implementation. Real world would need more complex query or view.
 
-    // 1. Transport
-    const { data: transport } = await supabase
-        .from("transport_items")
-        .select("expense_amount, currency")
-        .eq("trip_item_id", tripId); // This logic is wrong, need join.
+
 
     // Correct approach needs to join through trip_items.
     // For now, let's just implement the budget actions.
