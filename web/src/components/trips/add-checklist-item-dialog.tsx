@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Plus, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ interface AddChecklistItemDialogProps {
 }
 
 export function AddChecklistItemDialog({ tripId }: AddChecklistItemDialogProps) {
+    const router = useRouter();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [description, setDescription] = useState("");
@@ -33,10 +35,15 @@ export function AddChecklistItemDialog({ tripId }: AddChecklistItemDialogProps) 
 
         setLoading(true);
         try {
-            await addChecklistItem(tripId, description, group);
-            toast.success("Item added");
-            setOpen(false);
-            setDescription("");
+            const result = await addChecklistItem(tripId, description, group);
+            if (result) {
+                toast.success("Item added");
+                setOpen(false);
+                setDescription("");
+                router.refresh(); // Force page to refetch data
+            } else {
+                toast.error("Failed to add item");
+            }
         } catch (error) {
             console.error(error);
             toast.error("Failed to add item");
